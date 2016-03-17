@@ -57,23 +57,15 @@ namespace ServerManager
 
             public void Broadcast(ClientHandler client, string message)
             {
-                foreach (ClientHandler tmpClient in clients)
+                foreach (ClientHandler tmpPlayer in clients)
                 {
-                    if (tmpClient != client)
-                    {
-                        NetworkStream n = tmpClient.tcpclient.GetStream();
+                    
+                        NetworkStream n = tmpPlayer.tcpclient.GetStream();
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(message);
                         w.Flush();
                         Console.WriteLine(message);
-                    }
-                    else if (clients.Count() == 1)
-                    {
-                        NetworkStream n = tmpClient.tcpclient.GetStream();
-                        BinaryWriter w = new BinaryWriter(n);
-                        w.Write("Sorry, you are alone...");
-                        w.Flush();
-                    }
+               
                 }
             }
 

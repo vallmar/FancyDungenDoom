@@ -6,12 +6,19 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Fancy_Dungeons_Of_Doom
 {
     class Client
     {
         private TcpClient client;
+        private Form1 OurForm;
+
+        public Client(Form1 ourForm)
+        {
+            OurForm = ourForm;
+        } 
 
         public void Start()
         {
@@ -33,7 +40,7 @@ namespace Fancy_Dungeons_Of_Doom
             {
                 while (true)
                 {
-                    if (new Form1().drive == false)
+                    if (OurForm.drive == false)
                     {
                         NetworkStream n = client.GetStream();
 
@@ -42,6 +49,8 @@ namespace Fancy_Dungeons_Of_Doom
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(input);
                         w.Flush();
+
+
                     }
                 }
 
@@ -61,15 +70,18 @@ namespace Fancy_Dungeons_Of_Doom
                 while (true)
                 {
                     NetworkStream n = client.GetStream();
+
                     input = new BinaryReader(n).ReadString();
-                    string[] inputString = input.Split(';');
-                    Form1.player.X = Convert.ToInt32(inputString[0]);
-                    Form1.player.Y = Convert.ToInt32(inputString[1]);
+                    //string[] inputString = input.Split(';');
+                    //Form1.player.X = Convert.ToInt32(inputString[0]);
+                    //Form1.player.Y = Convert.ToInt32(inputString[1]);
+                    OurForm.DisplayPlayer(input);
+
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                
             }
         }
     }

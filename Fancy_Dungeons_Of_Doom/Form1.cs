@@ -34,12 +34,14 @@ namespace Fancy_Dungeons_Of_Doom
         private void Form1_Load(object sender, EventArgs e)
         {
             CreatePlayer();
-            CreateGameField();
-            CreateObjects();
+
+            //Kör enbart om man är förste spelare in.
+            //CreateGameField();
+            //CreateObjects();
             DisplayObjects();
         }
 
-        void CreateGameField()
+        public void CreateGameField()
         {
             world = new GameButton[WorldWidth, WorldHeight];
             for (int i = 0; i < WorldWidth; i++)
@@ -76,7 +78,7 @@ namespace Fancy_Dungeons_Of_Doom
             }
         }
 
-        void CreateObjects()
+        public void CreateObjects()
         {
             //Placera ut mur och drake
             world[18, 9].MonsterInRoom = new Dragon("Golden Dragon", 1000, 200);
@@ -210,13 +212,13 @@ namespace Fancy_Dungeons_Of_Doom
         {
             return param;
         }
-        public void DisplayPlayer(string input)
+        public void DisplayPlayer(int inputX, int inputY)
         {
-            string[] inputString = input.Split(';');
-            player.X = Convert.ToInt32(inputString[0]);
-            player.Y = Convert.ToInt32(inputString[1]);
+
+            player.X = inputX;
+            player.Y = inputY;
             
-            world[Convert.ToInt32(inputString[0]), Convert.ToInt32(inputString[1])].Image = Image.FromFile(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
+            world[inputX, inputY].Image = Image.FromFile(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
             lblAttack.Text = player.AttackStrength.ToString();
             lblHealth.Text = player.Health.ToString();
         }

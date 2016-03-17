@@ -57,9 +57,11 @@ namespace ServerManager
 
             public void Broadcast(ClientHandler client, string message)
             {
+                int players = clients.Count;
+                string sendMessage = message+= ";" + players;
                 foreach (ClientHandler tmpPlayer in clients)
                 {
-                    
+
                         NetworkStream n = tmpPlayer.tcpclient.GetStream();
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(message);

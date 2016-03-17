@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DungeonsOfDoom;
+using System.Threading;
+using System.Net.Sockets;
+using System.IO;
 
 namespace Fancy_Dungeons_Of_Doom
 {
@@ -16,12 +19,14 @@ namespace Fancy_Dungeons_Of_Doom
         const int WorldWidth = 20;
         const int WorldHeight = 10;
         public static Player player;
+        public bool drive;
 
         GameButton[,] world;
         Random random = new Random();
         public Form1()
         {
             InitializeComponent();
+            Label.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -120,68 +125,96 @@ namespace Fancy_Dungeons_Of_Doom
         void CreatePlayer()
         {
             player = new Player("Player", 500, 10);
+            Client myClient = new Client(this);
+            Thread playerThread = new Thread(myClient.Start);
+            playerThread.Start();
+            //playerThread.Join();
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        public void btnUp_Click(object sender, EventArgs e)
         {
+            MovePlayer(player, "up");
 
-            int x = player.X;
-            int y = player.Y;
-            world[player.X, player.Y].Image = null;
-            if ( player.Y-1 >= 0 && world[x, y-1].Block == false)
-            {
-                CheckForItem(x, (y - 1));
-                CheckForMonster(x, (y - 1));
-                player.Y--;
-            }
-            DisplayPlayer();
+            //int x = player.X;
+            //int y = player.Y;
+            //world[player.X, player.Y].Image = null;
+            //if ( player.Y-1 >= 0 && world[x, y-1].Block == false)
+            //{
+            //    CheckForItem(x, (y - 1));
+            //    CheckForMonster(x, (y - 1));
+            //    player.Y--;
+            //    drive = true;
+            //}
+            //DisplayPlayer();
+            //drive = false;
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        public void btnLeft_Click(object sender, EventArgs e)
         {
-            int x = player.X;
-            int y = player.Y;
-            world[player.X, player.Y].Image = null;
-            if (player.X-1 >= 0 && world[x-1, y].Block == false)
-            {
-                CheckForItem((x - 1), y);
-                CheckForMonster((x - 1), y);
-                player.X--;
-            }
-            DisplayPlayer();
+            MovePlayer(player, "left");
+
+            //int x = player.X;
+            //int y = player.Y;
+            //world[player.X, player.Y].Image = null;
+            //if (player.X-1 >= 0 && world[x-1, y].Block == false)
+            //{
+            //    CheckForItem((x - 1), y);
+            //    CheckForMonster((x - 1), y);
+            //    player.X--;
+            //    drive = true;
+            //}
+            //DisplayPlayer();
+            //drive = false;
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        public void btnDown_Click(object sender, EventArgs e)
         {
-            int x = player.X;
-            int y = player.Y;
-            world[player.X, player.Y].Image = null;
-            if (player.Y + 1 < WorldHeight && world[x, y+1].Block == false)
-            {
-                CheckForItem(x, (y + 1));
-                CheckForMonster(x, (y+1));
-                player.Y++;
-            }
-            DisplayPlayer();
+            MovePlayer(player, "down");
+
+            //int x = player.X;
+            //int y = player.Y;
+            //world[player.X, player.Y].Image = null;
+            //if (player.Y + 1 < WorldHeight && world[x, y+1].Block == false)
+            //{
+            //    CheckForItem(x, (y + 1));
+            //    CheckForMonster(x, (y+1));
+            //    player.Y++;
+            //    drive = true;
+            //}
+            //DisplayPlayer();
+            //drive = false;
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        public void btnRight_Click(object sender, EventArgs e)
         {
-            int x = player.X;
-            int y = player.Y;
-            world[player.X, player.Y].Image = null;
-            if (player.X + 1 < WorldWidth && world[x + 2, y].Block == false)
-            {
-                CheckForItem((x + 1), y);
-                CheckForMonster((x + 1), y);
-                player.X++;
-            }
-            DisplayPlayer();
+            MovePlayer(player, "right");
+
+
+            //int x = player.X;
+            //int y = player.Y;
+            //world[player.X, player.Y].Image = null;
+            //if (player.X + 1 < WorldWidth && world[x + 1, y].Block == false)
+            //{
+            //    CheckForItem((x + 1), y);
+            //    CheckForMonster((x + 1), y);
+            //    player.X++;
+            //    drive = true;
+            //}
+            //DisplayPlayer();
+            //drive = false;
         }
 
-        private void DisplayPlayer()
+        public string GetParam(string param)
         {
-            world[player.X, player.Y].Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
+            return param;
+        }
+        public void DisplayPlayer(string input)
+        {
+            string[] inputString = input.Split(';');
+            player.X = Convert.ToInt32(inputString[0]);
+            player.Y = Convert.ToInt32(inputString[1]);
+            
+            world[Convert.ToInt32(inputString[0]), Convert.ToInt32(inputString[1])].Image = Image.FromFile(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
             lblAttack.Text = player.AttackStrength.ToString();
             lblHealth.Text = player.Health.ToString();
         }
@@ -236,6 +269,87 @@ namespace Fancy_Dungeons_Of_Doom
                 MessageBox.Show(world[nextX, nextY].ItemInRoom.FoundItem(player));
             }
             world[nextX, nextY].ItemInRoom = null;
+        }
+        public void MovePlayer(Player player, string move)
+        {
+            drive = false;
+
+            int tempPlayerPosition;
+            int tempPlayerNotPosition;
+            int tempMove;
+            int posX;
+            int posY;
+            int dimension;
+
+            switch (move)
+            {
+                case "right":
+                    tempPlayerPosition = player.X;
+                    tempPlayerNotPosition = player.Y;
+                    tempMove = 1;
+                    posX = 1;
+                    posY = 0;
+                    dimension = WorldWidth;
+                    break;
+                case "left":
+                    tempPlayerPosition = player.X;
+                    tempPlayerNotPosition = player.Y;
+                    tempMove = -1;
+                    posX = -1;
+                    posY = 0;
+                    dimension = 0;
+                    break;
+                case "up":
+                    tempPlayerPosition = player.Y;
+                    tempPlayerNotPosition = player.X;
+                    tempMove = -1;
+                    posY = -1;
+                    posX = 0;
+                    dimension = 0;
+                    break;
+                case "down":
+                    tempPlayerPosition = player.Y;
+                    tempPlayerNotPosition = player.X;
+                    tempMove = 1;
+                    posY = 1;
+                    posX = 0;
+                    dimension = WorldHeight;
+                    break;
+                default:
+                    tempPlayerPosition = player.X;
+                    tempMove = 0;
+                    posY = 1;
+                    posX = 0;
+                    tempPlayerNotPosition = player.X;
+                    dimension = 10;
+                    break;
+            }
+
+            world[player.X, player.Y].Image = null;
+            if (move == "up" || move == "left")
+            {
+                if (tempPlayerPosition + tempMove >= dimension && world[(player.X + posX), (player.Y + posY)].Block == false)
+                {
+                    CheckForItem((player.X + posX), (player.Y + posY));
+                    CheckForMonster((player.X + posX), (player.Y + posY));
+                    tempPlayerPosition += tempMove;
+                    player.X += posX;
+                    player.Y += posY;
+                }
+            }
+            else if (move == "right" || move == "down")
+            {
+                if (tempPlayerPosition + tempMove < dimension && world[(player.X + posX), (player.Y + posY)].Block == false)
+                {
+                    CheckForItem((player.X + posX), (player.Y + posY));
+                    CheckForMonster((player.X + posX), (player.Y + posY));
+                    tempPlayerPosition += tempMove;
+                    player.X += posX;
+                    player.Y += posY;
+                }
+            }
+            drive = true;
+                //DisplayPlayer();
         }
     }
 }

@@ -54,7 +54,7 @@
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(75, 23);
             this.btnUp.TabIndex = 1;
-            this.btnUp.Text = "button1";
+            this.btnUp.Text = "Up";
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
@@ -64,7 +64,7 @@
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(75, 23);
             this.btnLeft.TabIndex = 2;
-            this.btnLeft.Text = "button2";
+            this.btnLeft.Text = "Left";
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
@@ -74,7 +74,7 @@
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(75, 23);
             this.btnDown.TabIndex = 3;
-            this.btnDown.Text = "button3";
+            this.btnDown.Text = "Down";
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
@@ -84,7 +84,7 @@
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(75, 23);
             this.btnRight.TabIndex = 4;
-            this.btnRight.Text = "button4";
+            this.btnRight.Text = "Right";
             this.btnRight.UseVisualStyleBackColor = true;
             this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
             // 

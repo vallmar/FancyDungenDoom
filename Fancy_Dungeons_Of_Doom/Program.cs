@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DungeonsOfDoom;
+using System.Threading;
 
 namespace Fancy_Dungeons_Of_Doom
 {
@@ -18,6 +19,7 @@ namespace Fancy_Dungeons_Of_Doom
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
         }
     }
 }

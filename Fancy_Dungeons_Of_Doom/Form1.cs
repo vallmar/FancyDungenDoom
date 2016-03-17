@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DungeonsOfDoom;
+using System.Threading;
 
 namespace Fancy_Dungeons_Of_Doom
 {
@@ -16,6 +17,7 @@ namespace Fancy_Dungeons_Of_Doom
         const int WorldWidth = 20;
         const int WorldHeight = 10;
         public static Player player;
+        public bool drive;
 
         GameButton[,] world;
         Random random = new Random();
@@ -120,9 +122,13 @@ namespace Fancy_Dungeons_Of_Doom
         void CreatePlayer()
         {
             player = new Player("Player", 500, 10);
+            Client myClient = new Client();
+            Thread playerThread = new Thread(myClient.Start);
+            playerThread.Start();
+            //playerThread.Join();
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        public void btnUp_Click(object sender, EventArgs e)
         {
             int x = player.X;
             int y = player.Y;
@@ -132,11 +138,13 @@ namespace Fancy_Dungeons_Of_Doom
                 CheckForItem(x, (y - 1));
                 CheckForMonster(x, (y - 1));
                 player.Y--;
+                drive = true;
             }
             DisplayPlayer();
+            drive = false;
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        public void btnLeft_Click(object sender, EventArgs e)
         {
             int x = player.X;
             int y = player.Y;
@@ -146,11 +154,13 @@ namespace Fancy_Dungeons_Of_Doom
                 CheckForItem((x - 1), y);
                 CheckForMonster((x - 1), y);
                 player.X--;
+                drive = true;
             }
             DisplayPlayer();
+            drive = false;
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        public void btnDown_Click(object sender, EventArgs e)
         {
             int x = player.X;
             int y = player.Y;
@@ -160,24 +170,32 @@ namespace Fancy_Dungeons_Of_Doom
                 CheckForItem(x, (y + 1));
                 CheckForMonster(x, (y+1));
                 player.Y++;
+                drive = true;
             }
             DisplayPlayer();
+            drive = false;
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        public void btnRight_Click(object sender, EventArgs e)
         {
             int x = player.X;
             int y = player.Y;
             world[player.X, player.Y].Image = null;
-            if (player.X + 1 < WorldWidth && world[x + 2, y].Block == false)
+            if (player.X + 1 < WorldWidth && world[x + 1, y].Block == false)
             {
                 CheckForItem((x + 1), y);
                 CheckForMonster((x + 1), y);
                 player.X++;
+                drive = true;
             }
             DisplayPlayer();
+            drive = false;
         }
 
+        public string GetParam(string param)
+        {
+            return param;
+        }
         private void DisplayPlayer()
         {
             world[player.X, player.Y].Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");

@@ -32,7 +32,7 @@ namespace Fancy_Dungeons_Of_Doom
                 sendThread.Abort();
         }
 
-        
+
         public void Start(Player player)
         {
             client = new TcpClient("192.168.220.103", 5000);
@@ -53,9 +53,11 @@ namespace Fancy_Dungeons_Of_Doom
             {
                 while (true)
                 {
+
+
                     if (Form1.drive == false)
                     {
-                    Thread.Sleep(200);
+                        Thread.Sleep(200);
                         NetworkStream n = client.GetStream();
 
                         input = (player.X + ";" + player.Y).ToString();
@@ -84,22 +86,29 @@ namespace Fancy_Dungeons_Of_Doom
                     NetworkStream n = client.GetStream();
 
                     input = new BinaryReader(n).ReadString();
-                    //string[] inputString = input.Split(';');
+                    string[] inputString = input.Split(';');
                     //Form1.player.X = Convert.ToInt32(inputString[0]);
                     //Form1.player.Y = Convert.ToInt32(inputString[1]);
-                    OurForm.DisplayPlayer(input);
+
+                    if (Convert.ToInt32(inputString[3]) == 1)
+                    {
+                        OurForm.CreateGameField();
+                        OurForm.CreateObjects();
+                    }
+
+                    OurForm.DisplayPlayer(Convert.ToInt32(inputString[0]), Convert.ToInt32(inputString[1]));
 
                 }
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
         internal void KillYourself()
         {
-            
+
             if (listenThread.IsAlive)
                 listenThread.Abort();
 

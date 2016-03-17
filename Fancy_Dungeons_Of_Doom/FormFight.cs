@@ -21,7 +21,7 @@ namespace Fancy_Dungeons_Of_Doom
 
         public void FormFight_Load(object sender, EventArgs e)
         {
-           pictureBoxPlayer.Image= Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
+           pictureBoxPlayer.Image= Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
         }
 
         internal Character GameFightMonster(Character monster)
@@ -31,7 +31,7 @@ namespace Fancy_Dungeons_Of_Doom
             lblHealth.Text = Form1.player.Health.ToString();
             lblHealthOpp.Text = monster.Health.ToString();
             lblAttackOpp.Text = monster.AttackStrength.ToString();
-            pictureBoxPlayer.BackgroundImage = Image.FromFile(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon.png");
+            pictureBoxPlayer.BackgroundImage = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon.png");
             this.Show();
             do
             {

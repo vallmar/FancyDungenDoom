@@ -65,7 +65,7 @@ namespace Fancy_Dungeons_Of_Doom
                     // Sätt samma event för alla knappar
                     if (newBtn.X == player.X && newBtn.Y == player.Y)
                     {
-                        newBtn.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
+                        newBtn.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
                     }
 
                     // Lägg till knappen I Forms
@@ -215,7 +215,7 @@ namespace Fancy_Dungeons_Of_Doom
             player.X = Convert.ToInt32(inputString[0]);
             player.Y = Convert.ToInt32(inputString[1]);
             
-            world[Convert.ToInt32(inputString[0]), Convert.ToInt32(inputString[1])].Image = Image.FromFile(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
+            world[Convert.ToInt32(inputString[0]), Convert.ToInt32(inputString[1])].Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
             lblAttack.Text = player.AttackStrength.ToString();
             lblHealth.Text = player.Health.ToString();
         }
@@ -230,16 +230,16 @@ namespace Fancy_Dungeons_Of_Doom
 
                     if (room.MonsterInRoom != null)
                         if (room.MonsterInRoom is Dragon)
-                            room.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\Dragon.jpg");
+                            room.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\Dragon.jpg");
                         else
-                            room.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\Monster.jpg");
+                            room.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\Monster.jpg");
                     else if (room.ItemInRoom != null)
                         if (room.ItemInRoom is Treasure)
-                            room.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\Treasure.png");
+                            room.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\Treasure.png");
                         else
-                            room.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\Items2.png");
+                            room.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\Items2.png");
                     else if (room.Block == true)
-                        room.Image = Image.FromFile(@"c:\users\administrator\documents\visual studio 2015\Projects\Fancy_Dungeons_Of_Doom\Fancy_Dungeons_Of_Doom\Image\Wall.png");
+                        room.Image = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\Wall.png");
                 }
             }
         }

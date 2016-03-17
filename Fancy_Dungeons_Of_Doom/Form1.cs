@@ -19,7 +19,8 @@ namespace Fancy_Dungeons_Of_Doom
         const int WorldWidth = 20;
         const int WorldHeight = 10;
         public static Player player;
-        public bool drive;
+        public static bool drive;
+        private Client myClient;
 
         GameButton[,] world;
         Random random = new Random();
@@ -125,7 +126,7 @@ namespace Fancy_Dungeons_Of_Doom
         void CreatePlayer()
         {
             player = new Player("Player", 500, 10);
-            Client myClient = new Client(this);
+            myClient = new Client(this);
             Thread playerThread = new Thread(myClient.Start);
             playerThread.Start();
             //playerThread.Join();
@@ -350,6 +351,11 @@ namespace Fancy_Dungeons_Of_Doom
             }
             drive = true;
                 //DisplayPlayer();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            myClient.KillYourself();
         }
     }
 }

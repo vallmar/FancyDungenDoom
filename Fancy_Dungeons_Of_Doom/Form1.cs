@@ -21,6 +21,7 @@ namespace Fancy_Dungeons_Of_Doom
         public Player player;
         public static bool drive;
         private Client myClient;
+        
 
         GameButton[,] world;
         Random random = new Random();

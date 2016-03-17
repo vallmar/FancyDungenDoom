@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonsOfDoom;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,19 +33,19 @@ namespace Fancy_Dungeons_Of_Doom
         }
 
         
-        public void Start()
+        public void Start(Player player)
         {
             client = new TcpClient("192.168.220.103", 5000);
             listenThread = new Thread(Listen);
             listenThread.Start();
-            sendThread = new Thread(Send);
+            sendThread = new Thread(() => Send(player));
             sendThread.Start();
 
             listenThread.Join();
             sendThread.Join();
         }
 
-        public void Send()
+        public void Send(Player player)
         {
             string input;
 
@@ -57,7 +58,7 @@ namespace Fancy_Dungeons_Of_Doom
                     Thread.Sleep(200);
                         NetworkStream n = client.GetStream();
 
-                        input = (Form1.player.X + ";" + Form1.player.Y).ToString();
+                        input = (player.X + ";" + player.Y).ToString();
 
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(input);

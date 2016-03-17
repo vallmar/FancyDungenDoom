@@ -64,7 +64,6 @@ namespace ServerManager
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(message);
                         w.Flush();
-                        Console.WriteLine(message);
                
                 }
             }
@@ -97,7 +96,7 @@ namespace ServerManager
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
                         myServer.Broadcast(this,message);
-                        
+                        Console.WriteLine(message);
                     }
 
                     myServer.DisconnectClient(this);

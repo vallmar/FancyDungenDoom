@@ -14,18 +14,30 @@ namespace Fancy_Dungeons_Of_Doom
     {
         private TcpClient client;
         private Form1 OurForm;
+        private Thread listenThread;
+        private Thread sendThread;
 
         public Client(Form1 ourForm)
         {
             OurForm = ourForm;
-        } 
+        }
 
+        ~Client()
+        {
+            if (listenThread.IsAlive)
+                listenThread.Abort();
+
+            if (sendThread.IsAlive)
+                sendThread.Abort();
+        }
+
+        
         public void Start()
         {
-            client = new TcpClient("192.168.137.4", 5000);
-            Thread listenThread = new Thread(Listen);
+            client = new TcpClient("192.168.137.198", 5000);
+            listenThread = new Thread(Listen);
             listenThread.Start();
-            Thread sendThread = new Thread(Send);
+            sendThread = new Thread(Send);
             sendThread.Start();
 
             listenThread.Join();
@@ -40,8 +52,9 @@ namespace Fancy_Dungeons_Of_Doom
             {
                 while (true)
                 {
-                    if (OurForm.drive == false)
+                    if (Form1.drive == false)
                     {
+                    Thread.Sleep(1000);
                         NetworkStream n = client.GetStream();
 
                         input = (Form1.player.X + ";" + Form1.player.Y).ToString();
@@ -49,7 +62,6 @@ namespace Fancy_Dungeons_Of_Doom
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(input);
                         w.Flush();
-                        
 
 
                     }
@@ -84,6 +96,16 @@ namespace Fancy_Dungeons_Of_Doom
             {
                 
             }
+        }
+
+        internal void KillYourself()
+        {
+            
+            if (listenThread.IsAlive)
+                listenThread.Abort();
+
+            if (sendThread.IsAlive)
+                sendThread.Abort();
         }
     }
 }

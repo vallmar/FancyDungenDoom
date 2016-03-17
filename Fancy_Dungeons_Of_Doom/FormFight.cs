@@ -24,33 +24,33 @@ namespace Fancy_Dungeons_Of_Doom
            pictureBoxPlayer.Image= Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon small.png");
         }
 
-        internal Character GameFightMonster(Character monster)
+        internal Character GameFightMonster(Character monster, Player player)
         {
             
-            lblAttack.Text = Form1.player.AttackStrength.ToString();
-            lblHealth.Text = Form1.player.Health.ToString();
+            lblAttack.Text = player.AttackStrength.ToString();
+            lblHealth.Text = player.Health.ToString();
             lblHealthOpp.Text = monster.Health.ToString();
             lblAttackOpp.Text = monster.AttackStrength.ToString();
             pictureBoxPlayer.BackgroundImage = Image.FromFile(@"C:\Users\Administrator\Source\Repos\FancyDungenDoom\Fancy_Dungeons_Of_Doom\Image\PlayerIkon.png");
             this.Show();
             do
             {
-                Form1.player.Fight(monster);
+                player.Fight(monster);
                 if (monster.Health <= 0)
                 {
-                    Form1.player.Backpack.Add(monster);
+                    player.Backpack.Add(monster);
                     foreach (var item in monster.Backpack)
                     {
-                        Form1.player.Backpack.Add(item);
+                        player.Backpack.Add(item);
                     }
                 }
-                monster.Fight(Form1.player);
-                if (Form1.player.Health <= 0)
+                monster.Fight(player);
+                if (player.Health <= 0)
                     MessageBox.Show("You Lost");
                 this.Close();
                     
             }
-            while (Form1.player.Health > 0 && monster.Health > 0);
+            while (player.Health > 0 && monster.Health > 0);
 
             return monster;
         }

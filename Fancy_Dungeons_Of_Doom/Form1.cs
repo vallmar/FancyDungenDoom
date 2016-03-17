@@ -28,6 +28,7 @@ namespace Fancy_Dungeons_Of_Doom
         {
             InitializeComponent();
             Label.CheckForIllegalCrossThreadCalls = false;
+            //player = new Player("Jesus", 200, 40);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -125,9 +126,9 @@ namespace Fancy_Dungeons_Of_Doom
 
         void CreatePlayer()
         {
-            player = new Player("Player", 500, 10);
+            player = new Player("Player", 500, 80);
             myClient = new Client(this);
-            Thread playerThread = new Thread(myClient.Start);
+            Thread playerThread = new Thread(() => myClient.Start(player));
             playerThread.Start();
             //playerThread.Join();
         }
@@ -253,7 +254,7 @@ namespace Fancy_Dungeons_Of_Doom
                 Monster monster = world[nextX, nextY].MonsterInRoom;
 
                 var forFun = new FormFight();
-                if (forFun.GameFightMonster(monster).Health <= 0)
+                if (forFun.GameFightMonster(monster, player).Health <= 0)
                 {
                     world[nextX, nextY].MonsterInRoom = null;
                     a++;

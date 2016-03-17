@@ -124,6 +124,7 @@ namespace Fancy_Dungeons_Of_Doom
 
         private void btnUp_Click(object sender, EventArgs e)
         {
+
             int x = player.X;
             int y = player.Y;
             world[player.X, player.Y].Image = null;

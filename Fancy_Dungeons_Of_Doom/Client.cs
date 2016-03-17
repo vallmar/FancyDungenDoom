@@ -57,7 +57,7 @@ namespace Fancy_Dungeons_Of_Doom
                     Thread.Sleep(200);
                         NetworkStream n = client.GetStream();
 
-                        input = (Form1.player.X + ";" + Form1.player.Y).ToString();
+                        input = (OurForm.player.X + ";" + OurForm.player.Y).ToString();
 
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(input);

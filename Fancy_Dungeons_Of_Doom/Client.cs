@@ -34,7 +34,7 @@ namespace Fancy_Dungeons_Of_Doom
         
         public void Start()
         {
-            client = new TcpClient("192.168.137.198", 5000);
+            client = new TcpClient("192.168.220.103", 5000);
             listenThread = new Thread(Listen);
             listenThread.Start();
             sendThread = new Thread(Send);

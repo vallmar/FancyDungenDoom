@@ -1,4 +1,6 @@
-﻿namespace Fancy_Dungeons_Of_Doom
+﻿using DungeonsOfDoom;
+
+namespace Fancy_Dungeons_Of_Doom
 {
     interface Room
     {

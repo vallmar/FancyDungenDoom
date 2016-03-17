@@ -22,7 +22,7 @@ namespace Fancy_Dungeons_Of_Doom
 
         public void Start()
         {
-            client = new TcpClient("192.168.137.198", 5000);
+            client = new TcpClient("192.168.137.4", 5000);
             Thread listenThread = new Thread(Listen);
             listenThread.Start();
             Thread sendThread = new Thread(Send);
@@ -49,6 +49,7 @@ namespace Fancy_Dungeons_Of_Doom
                         BinaryWriter w = new BinaryWriter(n);
                         w.Write(input);
                         w.Flush();
+                        
 
 
                     }
